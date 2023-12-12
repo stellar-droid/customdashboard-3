@@ -9,6 +9,7 @@ import doughnut from './assets/doughnut.png'
 
 
 export default function App() {
+  
   const data = [
     {
       id: "Dashboard",
@@ -21,11 +22,10 @@ export default function App() {
       id: "Widgets",
       title: "Widgets",
       cards: [
-        {
-          id: "bargraph",
+        { 
+          id: 'bargraph',
           title: "Bar Graph",
           image:bargraph
-          
         },
         {
           id: "piechart",

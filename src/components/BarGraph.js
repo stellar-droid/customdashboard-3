@@ -25,7 +25,7 @@ const BarChart = (props) => {
         plugins: {
             title: {
                display: true,
-               text: 'Bar Chart'
+               text: props.title,
              }
           }
       };

@@ -102,12 +102,15 @@ const Column = ({ id, title, cards, style }) => {
     localStorage.setItem("dashboard", JSON.stringify(gridCards));
   };
 
+  const [editingCard, setEditingCard] = useState(false);
+
+
   if (isDraggable) {
     return (
       <div
         style={{
           background: "#adbbc4",
-          borderRadius:'4px',
+          borderRadius: '4px',
           marginRight: "10px",
           padding: "12px",
         }}
@@ -120,7 +123,7 @@ const Column = ({ id, title, cards, style }) => {
             color: "#575757",
           }}
         >
-          {title}
+          {"title"}
         </p>
         <div style={{ display: "flex", gap: "8px" }}>
           {cards.map((card, index) => (
@@ -150,7 +153,7 @@ const Column = ({ id, title, cards, style }) => {
         ref={setNodeRef}
         style={{
           background: "#adbbc4",
-          borderRadius:'4px',
+          borderRadius: '4px',
           marginRight: "10px",
           padding: "12px",
         }}
@@ -191,7 +194,7 @@ const Column = ({ id, title, cards, style }) => {
           onResize={onResize}
           onLayoutChange={onLayoutChange}
           draggableHandle=".draggableHandle"
-          // isBounded={true}
+        // isBounded={true}
         >
           {gridCards.length > 0 &&
             gridCards.map((card, index) => (
@@ -220,30 +223,54 @@ const Column = ({ id, title, cards, style }) => {
                     className="draggableHandle"
                   ></Chip>
                   <div className="optionsContainer">
-                    <IconButton onClick={() => setOpen(true)}>
+                    <IconButton onClick={() => { setEditingCard(!editingCard); }}>
                       <EditIcon style={{ color: "#000000" }}></EditIcon>
                     </IconButton>
                   </div>
                 </div>
-                <Divider sx={{fontWeight:'600'}}/>
+                <Divider sx={{ fontWeight: '600' }} />
+
                 <Card
                   key={card.id}
                   id={card.id}
                   title={card.title}
                   isDraggable={false}
                   image={barGraph}
+                  isEditable={editingCard }
+                  setEditingCard={setEditingCard} 
+                  // isEditable={editingCard === card.id}
+                  // setEditingCard={(cardId, isEditing) => setEditingCard(isEditing ? cardId : null)}
                 />
-              </div>
-            ))}
-        </ReactGridLayout>
 
-        <Dialog open={open} handleClose={handleClose}>
+                {/* <Dialog open={open} handleClose={handleClose}>
+                  <Paper>
+                    <Chip label="hello">Hello</Chip>
+                    <CloseOutlined onClick={() => {
+                      setEditingCard(card.id)
+                      setOpen(false)
+                    }}>
+                    </CloseOutlined>
+                  </Paper>
+                </Dialog> */}
+              </div>
+
+            ))
+          }
+
+
+        </ReactGridLayout >
+
+        {/* <Dialog open={open} handleClose={handleClose}>
           <Paper>
             <Chip label="hello">Hello</Chip>
-            <CloseOutlined onClick={() => setOpen(false)}></CloseOutlined>
+            <CloseOutlined onClick={() => {
+              setEditingCard(card.i)
+              setOpen(false)
+            }}>
+            </CloseOutlined>
           </Paper>
-        </Dialog>
-      </div>
+        </Dialog> */}
+      </div >
     );
   }
 };
