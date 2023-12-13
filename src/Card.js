@@ -3,7 +3,7 @@ import PieChart from "./components/PieChart";
 import Doughnut from "./components/DoughnutChart";
 import { useState } from "react";
 import { Button } from "@mui/material";
-const Card = ({ id, title, isDraggable, image, isEditable, setEditingCard }) => {
+const Card = ({ cardid, id, title, isDraggable, image, isEditable, setEditingCard, i, newWidget }) => {
   // const { attributes, listeners, setNodeRef, transition, transform } =
   //   useSortable({
   //     id: id,
@@ -35,13 +35,21 @@ const Card = ({ id, title, isDraggable, image, isEditable, setEditingCard }) => 
 
   }
 
+
+
   return (!isDraggable && id === 'bargraph') ?
     (
       <div style={{ height: '85%' }}>
-        {isEditable ? <><input type="text" value={values} placeholder="Enter Title" onChange={editdata} /> <Button onClick={() => setEditingCard(false)}>Done</Button>  </> :
+        {(isEditable && cardid === i) ? <>
+        <input type="text" value={values} placeholder="Enter Title" onChange={editdata} /> 
+        <Button onClick={() => setEditingCard(false)}>Done</Button>
+          </> :
 
-          <BarGraph title={values} ></BarGraph>
+
+null
         }
+<BarGraph title={values} ></BarGraph>
+        {console.log("newWidget", i)}
       </div>
 
 

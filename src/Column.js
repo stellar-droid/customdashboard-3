@@ -68,6 +68,8 @@ const Column = ({ id, title, cards, style }) => {
       setGridCards(dashboardData);
     }
   }, []);
+ 
+  const [newWidget, setNewWidget] = useState();
 
   const onDrop = (layout, layoutItem, event, elements) => {
     const widgetData = JSON.parse(event.dataTransfer.getData("text/plain"));
@@ -91,9 +93,10 @@ const Column = ({ id, title, cards, style }) => {
       minH: 2,
     };
     console.log("layoutItem", newWidget);
-    console.log("widgetData", widgetData);
+    console.log("widgetData", gridCards);
     setGridCards((prevWidgets) => [...prevWidgets, newWidget]);
     setLayout((prevLayout) => [...prevLayout, newWidget]);
+    setNewWidget(newWidget);
   };
   const handleClose = () => {
     setOpen(false);
@@ -103,8 +106,12 @@ const Column = ({ id, title, cards, style }) => {
   };
 
   const [editingCard, setEditingCard] = useState(false);
-
-
+  const [randomid, setRandomid] = useState();
+  const editcall = (card) => {
+    setEditingCard(!editingCard);
+    
+    setRandomid(card.i);
+  }
   if (isDraggable) {
     return (
       <div
@@ -223,7 +230,7 @@ const Column = ({ id, title, cards, style }) => {
                     className="draggableHandle"
                   ></Chip>
                   <div className="optionsContainer">
-                    <IconButton onClick={() => { setEditingCard(!editingCard); }}>
+                    <IconButton onClick={ () => editcall(card) }>
                       <EditIcon style={{ color: "#000000" }}></EditIcon>
                     </IconButton>
                   </div>
@@ -231,13 +238,17 @@ const Column = ({ id, title, cards, style }) => {
                 <Divider sx={{ fontWeight: '600' }} />
 
                 <Card
-                  key={card.id}
+                  key={card.i}
+                  cardid={card.i}
                   id={card.id}
                   title={card.title}
                   isDraggable={false}
                   image={barGraph}
                   isEditable={editingCard }
                   setEditingCard={setEditingCard} 
+                  newWidget={newWidget}
+                  i={randomid}
+
                   // isEditable={editingCard === card.id}
                   // setEditingCard={(cardId, isEditing) => setEditingCard(isEditing ? cardId : null)}
                 />
